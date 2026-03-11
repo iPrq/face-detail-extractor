@@ -1,0 +1,15 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.135.1",
+    "keras>=3.13.2",
+    "keras-hub>=0.26.0",
+    "numpy>=2.4.3",
+    "python-multipart>=0.0.22",
+    "tensorflow>=2.20.0",
+    "uvicorn>=0.41.0",
+]
