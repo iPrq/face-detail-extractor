@@ -15,8 +15,8 @@ interface Prediction {
   warnings?: string[];
 }
 
-// const API_URL = "https://iprq-face-details-model.hf.space/predict";
-const API_URL = "http://127.0.0.1:8000/predict";
+const API_URL = "https://iprq-face-details-model.hf.space/predict";
+
 const RACE_COLORS: Record<string, string> = {
   White: "text-sky-400 bg-sky-400/10 border-sky-400/20",
   Black: "text-amber-400 bg-amber-400/10 border-amber-400/20",
