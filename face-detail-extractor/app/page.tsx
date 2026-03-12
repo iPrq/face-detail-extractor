@@ -5,17 +5,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Upload, X, Loader2, Search, User, Fingerprint, Sparkles } from "lucide-react";
 
 interface Prediction {
-  age: number;
+  age: string;
   gender: string;
   race: string;
   confidence: {
     gender_score: number;
     race_score: number;
   };
+  warnings?: string[];
 }
 
-const API_URL = "https://iprq-face-details-model.hf.space/predict";
-
+// const API_URL = "https://iprq-face-details-model.hf.space/predict";
+const API_URL = "http://127.0.0.1:8000/predict";
 const RACE_COLORS: Record<string, string> = {
   White: "text-sky-400 bg-sky-400/10 border-sky-400/20",
   Black: "text-amber-400 bg-amber-400/10 border-amber-400/20",
@@ -206,18 +207,19 @@ export default function Home() {
           {/* Results Area */}
           <AnimatePresence>
             {result && (
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-4"
-              >
+              <>
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                >
                 {/* Age Block */}
                 <div className="p-8 rounded-3xl bg-zinc-900 border border-zinc-800 flex flex-col justify-between">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-2">
                     <User size={12} /> Estimated Age
                   </div>
                   <div className="mt-4 flex items-baseline gap-2">
-                    <span className="text-7xl font-black text-white">{Math.round(result.age)}</span>
+                    <span className="text-5xl font-black text-white">{result.age}</span>
                     <span className="text-zinc-500 font-medium">years</span>
                   </div>
                 </div>
@@ -245,6 +247,23 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
+
+                {/* Warnings Banner */}
+                {result.warnings && result.warnings.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-1"
+                  >
+                    {result.warnings.map((w, i) => (
+                      <p key={i} className="text-amber-400 text-xs font-medium flex items-center gap-2">
+                        <Sparkles size={12} className="shrink-0" />
+                        {w}
+                      </p>
+                    ))}
+                  </motion.div>
+                )}
+              </>
             )}
           </AnimatePresence>
         </div>

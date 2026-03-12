@@ -2,6 +2,12 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
+# Install system dependencies required by opencv-python-headless
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libglib2.0-0 \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
